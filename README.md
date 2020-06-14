@@ -1,1 +1,1 @@
-# This project is still in development, now , I only update a Data Center script which write with python, with this script you can create a TCP server that can connected by tacview's realtime telemetry optional.
+This project is still in development, now , I only update a Data Center script which write with python, with this script you can create a TCP server that can connected by tacview's realtime telemetry optional.
