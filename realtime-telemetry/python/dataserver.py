@@ -15,12 +15,23 @@ uav = UAV.Kinematics()
 
 def serverthread(ss):
     global uav
-    print(ss)
     so,addr = ss
-    so.send(UAV.HandShakeData.encode('utf-8'))
-    so.recv(1024)
+
+    print('give a handshake: ')
+    #print(UAV.HandShakeData + "\n")
+    #d = "XtraLib.Stream.0\r\nTacview.RealTimeTelemetry.0\rHost username\r"
+    so.send(UAV.HandShakeData1.encode('utf-8'))
+    so.send(UAV.HandShakeData2.encode('utf-8'))
+    so.send(UAV.HandShakeData3.encode('utf-8'))
+    so.send(b'\x00')
+    #so.send(d.encode('utf-8'))
+
+    data = so.recv(1024)
+    #print('wait for handshake: ')
+    #print(data)
+
     t = time.strftime(UAV.TelReferenceTimeFormat).encode('utf-8')
-    print(t)
+    
     tt = time.time()
     so.send(UAV.TelFileHeader.encode('utf-8'))
     so.send(t)
@@ -38,8 +49,7 @@ def recv_msg():
     print("recv uav data start")
     with socket(AF_INET,SOCK_DGRAM) as so:
         so.bind((UAV.LOCALIP,UAV.LOCALPORT))
-        print(so)
-        print(UAV.LOCALIP,UAV.LOCALPORT)
+        #print(UAV.LOCALIP,UAV.LOCALPORT)
         while True:
             data = so.recv(1024)
             uav.parse(data)

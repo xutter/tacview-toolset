@@ -3,10 +3,10 @@ from struct import unpack,pack
 from threading import Thread, Lock
 import pyproj
 
-HandShakeData = \
-'XtraLib.Stream.0\n' +\
-'TacView.RealTimeTelemetry.0\n' +\
-'Multirotor\n'
+HandShakeData1 = 'XtraLib.Stream.0\n'
+HandShakeData2 = 'Tacview.RealTimeTelemetry.0\n'
+HandShakeData3 = 'MultiRotor\n'
+
 TelFileHeader = "FileType=text/acmi/tacview\nFileVersion=2.2\n"
 TelReferenceTimeFormat = '0,ReferenceTime=%Y-%m-%dT%H:%M:%SZ\n'
 TelDataFormat = '#%.2f\n3000102,T=%.7f|%.7f|%.7f|%.1f|%.1f|%.1f,Type=Air+Rotorcraft,Color=Red,Coalition=Allies\n'
@@ -26,6 +26,7 @@ x, y = proj(LON, LAT)
 
 class Kinematics:
     def __init__(self):
+        self._id = 0
         self.x,self.y,self.z=0,0,0
         self.vx,self.vy,self.vz=0,0,0
         self.roll,self.pitch,self.yaw = 0,0,0
@@ -34,8 +35,8 @@ class Kinematics:
     def parse(self,data):
         global x,y
         with self.lock:
-            (self.x,self.y,self.z,self.vx,self.vy,self.vz,_,_,_,self.roll,self.pitch,self.yaw,_,_,_,_,_,_) \
-                = unpack('<ffffffffffffffffff',data)
+            (self._id, self.x,self.y,self.z,self.vx,self.vy,self.vz,_,_,_,self.roll,self.pitch,self.yaw,_,_,_,_,_,_)\
+                = unpack('<iffffffffffffffffff',data)
             self.z = self.z * -1 + 100
             self.x = x + self.x
             self.y = y + self.y
@@ -44,8 +45,8 @@ class Kinematics:
 
     def pack(self,delta_t):
         with self.lock:
-            line = format(TelDataFormat%(delta_t,self.x,self.y,self.z,self.roll,self.pitch,self.yaw)).encode('utf-8')
-            print(line)
+            line = format(TelDataFormat%(delta_t,self.x+LON,self.y+LAT,self.z+1880,self.roll,-1 * self.pitch,self.yaw)).encode('utf-8')
+            # print(line)
             return line
                           
 # while True:
