@@ -9,7 +9,7 @@ HandShakeData3 = 'MultiRotor\n'
 
 TelFileHeader = "FileType=text/acmi/tacview\nFileVersion=2.2\n"
 TelReferenceTimeFormat = '0,ReferenceTime=%Y-%m-%dT%H:%M:%SZ\n'
-TelDataFormat = '#%.2f\n3000102,T=%.7f|%.7f|%.7f|%.1f|%.1f|%.1f,Type=Air+Rotorcraft,Color=Red,Coalition=Allies\n'
+TelDataFormat = '#%.2f\n3000102,T=%.7f|%.7f|%.7f|%.1f|%.1f|%.1f,Type=Air+Rotorcraft,Name=DC-1,Color=Red,Coalition=Allies\n'
 
 LOCALPORT = 58008
 LOCALIP='127.0.0.1'

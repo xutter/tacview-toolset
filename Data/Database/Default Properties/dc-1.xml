@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DefaultPropertiesCollection LoadingOrder="1.0">
+	<DefaultProperties Id="Rotorcraft.DC-1" Base="Core.Rotorcraft">
+		<Criteria>
+			<Name>DC-1</Name>
+			<Name>DC-1 MLTRotor</Name>
+			<Name>DC-1</Name>
+		</Criteria>
+		<Properties>
+			<ShortName>DC-1</ShortName>
+			<LongName>DC-1 Fighter</LongName>
+			<FullName>DC-1 DC1</FullName>
+			<Shape>DC-1.obj</Shape>
+		</Properties>
+	</DefaultProperties>
+</DefaultPropertiesCollection>

@@ -2,7 +2,7 @@ import keyboard
 import airsim
 
 name ="Multirotor"
-number = '00'
+number = '195'
 client = airsim.MultirotorClient()
 client.confirmConnection()
 client.enableApiControl(True,name + number)
@@ -26,23 +26,24 @@ def abc(x):
     k_1 = keyboard.KeyboardEvent('down', 28, '1')
     k_2 = keyboard.KeyboardEvent('down', 28, '2')
     k_3 = keyboard.KeyboardEvent('down', 28, '3')
+    print(x.name)
 
     if x.event_type == 'down' and x.name == w.name:
         #前进
-        print(name+number)
+        #print(name+number)
         client.moveByVelocityBodyFrameAsync(-30, 0, -15, 0.07,airsim.DrivetrainType.MaxDegreeOfFreedom,airsim.YawMode(),name+number)
         print(x.name)
     elif x.event_type == 'down' and x.name == s.name:
         #后退
-        client.moveByVelocityBodyFrameAsync(30, 0, -5, 0.07,airsim.DrivetrainType.MaxDegreeOfFreedom,airsim.YawMode(),name+number)
+        client.moveByVelocityBodyFrameAsync(30, 0, -15, 0.07,airsim.DrivetrainType.MaxDegreeOfFreedom,airsim.YawMode(),name+number)
         print(x.name)
     elif x.event_type == 'down' and x.name == a.name:
         #左移
-        client.moveByVelocityBodyFrameAsync(0, -30, -5, 0.07,airsim.DrivetrainType.MaxDegreeOfFreedom,airsim.YawMode(),name+number)
+        client.moveByVelocityBodyFrameAsync(0, -30, -15, 0.07,airsim.DrivetrainType.MaxDegreeOfFreedom,airsim.YawMode(),name+number)
         print(x.name)
     elif x.event_type == 'down' and x.name == d.name:
         #右移
-        client.moveByVelocityBodyFrameAsync(0, 30, -5, 0.07,airsim.DrivetrainType.MaxDegreeOfFreedom,airsim.YawMode(),name+number)
+        client.moveByVelocityBodyFrameAsync(0, 30, -15, 0.07,airsim.DrivetrainType.MaxDegreeOfFreedom,airsim.YawMode(),name+number)
         print(x.name)
     elif x.event_type == 'down' and x.name == up.name:
         #上
@@ -54,11 +55,11 @@ def abc(x):
         print(x.name)
     elif x.event_type == 'down' and x.name == left.name:
         #左转
-        client.rotateByYawRateAsync(-20, 0.07)
+        client.rotateByYawRateAsync(-20, 0.07,name+number)
         print(x.name)
     elif x.event_type == 'down' and x.name == right.name:
         #右转
-        client.rotateByYawRateAsync(20, 0.07)
+        client.rotateByYawRateAsync(20, 0.07,name+number)
         print(x.name)
     elif x.event_type == 'down' and x.name == enter.name:
         #enter
@@ -71,7 +72,7 @@ def abc(x):
         client.armDisarm(True)
         print("unlock")
         # Async methods returns Future. Call join() to wait for task to complete.
-        client.takeoffAsync().join()
+        client.takeoffAsync(name+number).join()
         print("takeoff")
         print("你按下了 " + x.name + " 键")
     elif x.event_type == 'down' and x.name == l.name:
@@ -79,25 +80,25 @@ def abc(x):
         client.landAsync().join()
         print("land")
         # lock
-        client.armDisarm(False)
+        client.armDisarm(False,name+number)
         print("lock")
         # release control
         client.enableApiControl(False)
         print("release control")
 
         print("你按下了 " + x.name + " 键")
-    elif x.event_type == '1' and x.name == k_1.name:
+    elif x.event_type == 'down' and x.name == k_1.name:
         number = '00'
         print('Change control to Multirotor 1')
-    elif x.event_type == '2' and x.name == k_2.name:
+    elif x.event_type == 'down' and x.name == k_2.name:
         number = '01'
         print('Change control to Multirotor 2')
-    elif x.event_type == '3' and x.name == k_3.name:
+    elif x.event_type == 'down' and x.name == k_3.name:
         number = '02'
         print('Change control to Multirotor 3')
     else:#没有按下按键
         client.moveByVelocityBodyFrameAsync(0, 0, 0, 0.5,airsim.DrivetrainType.MaxDegreeOfFreedom,airsim.YawMode(),name+number).join()
-        client.hoverAsync().join()  # 第四阶段：悬停6秒钟
+        client.hoverAsync(name+number).join()  # 第四阶段：悬停6秒钟
         print("stop 悬停")
 
 
