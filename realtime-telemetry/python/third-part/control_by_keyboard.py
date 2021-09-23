@@ -1,8 +1,8 @@
 import keyboard
 import airsim
 
-name ="Multirotor"
-number = '195'
+name ="MR-"
+number = '0'
 client = airsim.MultirotorClient()
 client.confirmConnection()
 client.enableApiControl(True,name + number)
@@ -31,7 +31,7 @@ def abc(x):
     if x.event_type == 'down' and x.name == w.name:
         #前进
         #print(name+number)
-        client.moveByVelocityBodyFrameAsync(-30, 0, -15, 0.07,airsim.DrivetrainType.MaxDegreeOfFreedom,airsim.YawMode(),name+number)
+        client.moveByVelocityBodyFrameAsync(-30, 0, -15, 10,airsim.DrivetrainType.MaxDegreeOfFreedom,airsim.YawMode(),name+number)
         print(x.name)
     elif x.event_type == 'down' and x.name == s.name:
         #后退
@@ -88,18 +88,19 @@ def abc(x):
 
         print("你按下了 " + x.name + " 键")
     elif x.event_type == 'down' and x.name == k_1.name:
-        number = '00'
+        number = '0'
         print('Change control to Multirotor 1')
     elif x.event_type == 'down' and x.name == k_2.name:
-        number = '01'
+        number = '1'
         print('Change control to Multirotor 2')
     elif x.event_type == 'down' and x.name == k_3.name:
-        number = '02'
+        number = '2'
         print('Change control to Multirotor 3')
     else:#没有按下按键
-        client.moveByVelocityBodyFrameAsync(0, 0, 0, 0.5,airsim.DrivetrainType.MaxDegreeOfFreedom,airsim.YawMode(),name+number).join()
-        client.hoverAsync(name+number).join()  # 第四阶段：悬停6秒钟
-        print("stop 悬停")
+        pass
+        # client.moveByVelocityBodyFrameAsync(0, 0, 0, 0.5,airsim.DrivetrainType.MaxDegreeOfFreedom,airsim.YawMode(),name+number).join()
+        # client.hoverAsync(name+number).join()  # 第四阶段：悬停6秒钟
+        # print("stop 悬停")
 
 
     #当监听的事件为enter键，且是按下的时候
